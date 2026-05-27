@@ -271,79 +271,87 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-xl font-bold text-blue-700">ОмГТУ / Омск</h1>
-        <div className="text-sm text-gray-600">Прогресс: {progress}%</div>
-      </div>
+      {screen === "days" && (
+        <div>
+          <h1 className="text-3xl font-bold text-blue-700 mb-6">
+            Маршрут по Омску
+          </h1>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <div className="space-y-4">
-          {tasks.map((t) => (
-            <Card key={t.id}>
-              <CardContent className="p-4 flex justify-between">
-                <div>
-                  <div className="font-semibold">📌 {t.title}</div>
-                  <div className="text-sm text-gray-500">{t.desc}</div>
-                </div>
-                <button onClick={() => toggleTask(t.id)}>
-                  {t.done ? "✅" : "⬜"}
-                </button>
-              </CardContent>
-            </Card>
-          ))}
+          <div className="grid gap-4">
+            {DAYS.map((day) => (
+              <Card key={day.id}>
+                <CardContent className="p-6 flex justify-between items-center">
+                  <div>
+                    <h2 className="text-2xl font-bold">{day.title}</h2>
+                    <p className="text-gray-600 mt-2">{day.concept}</p>
+                  </div>
 
-          <Button onClick={() => setScreen("map")} variant="outline">
-            🗺️ Открыть карту Омска
-          </Button>
-          <Button onClick={() => setScreen("leisure")} variant="outline">
-            Досуг
-          </Button>
-        </div>
-      </div>
-
-      {screen === "map" && (
-        <div className="mt-6">
-          <Button onClick={() => setScreen("days")} className="mb-4">
-            ← Назад
-          </Button>
-
-          <YandexMap onSelect={setSelectedPlace} />
-
-          {selectedPlace && (
-            <Card className="mt-4">
-              <CardContent className="p-4">
-                <div className="font-bold">📍 {selectedPlace.name}</div>
-                <div className="text-sm text-gray-600 mt-2">
-                  {selectedPlace.info}
-                </div>
-              </CardContent>
-            </Card>
-          )}
+                  <Button
+                    onClick={() => {
+                      setSelectedDay(day.id);
+                      setScreen("day");
+                    }}
+                  >
+                    Открыть
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       )}
 
-      {screen === "leisure" && (
+      {screen === "day" && currentDay && (
         <div>
           <Button onClick={() => setScreen("days")} className="mb-4">
             ← Назад
           </Button>
 
-          <h2 className="text-lg font-bold mb-4">Студенческий Омск</h2>
+          <h1 className="text-3xl font-bold text-blue-700 mb-2">
+            {currentDay.title}
+          </h1>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            {LEISURE.map((item, i) => (
-              <Card key={i}>
-                <CardContent className="p-4">
-                  <div className="font-semibold flex justify-between">
-                    {item.title}
-                    <span className="text-sm text-yellow-600">⭐ {item.rating}</span>
-                  </div>
-                  <div className="text-sm text-gray-600 mt-2">
-                    {item.desc}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <p className="text-gray-600 text-lg mb-6">
+            {currentDay.concept}
+          </p>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            <div>
+              <h2 className="text-xl font-bold mb-4">Чеклист</h2>
+
+              <div className="space-y-4">
+                {currentDay.checklist.map((item, index) => (
+                  <Card key={index}>
+                    <CardContent className="p-4 flex items-center gap-3">
+                      <span className="text-xl">⬜</span>
+                      <span>{item}</span>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold mb-4">Карта дня</h2>
+
+              <YandexMap
+                places={currentDay.places}
+                onSelect={setSelectedPlace}
+              />
+
+              {selectedPlace && (
+                <Card className="mt-4">
+                  <CardContent className="p-4">
+                    <div className="font-bold text-lg">
+                      📍 {selectedPlace.name}
+                    </div>
+                    <div className="text-gray-600 mt-2">
+                      {selectedPlace.info}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </div>
         </div>
       )}
