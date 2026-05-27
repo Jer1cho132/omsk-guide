@@ -172,6 +172,10 @@ export default function App() {
     setDone((p) => ({ ...p, [key]: !p[key] }));
   };
 
+  const isDayCompleted = (day) => {
+    return day.checklist.every((_, i) => done[`${day.id}-${i}`]);
+  };
+
   if (screen === "home") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-50 text-center">
@@ -189,34 +193,36 @@ export default function App() {
           <h1 className="text-2xl font-bold mb-4">Дни маршрута</h1>
 
           <div className="space-y-4">
-            {DAYS.map((d) => (
-              <Card key={d.id}>
-                <CardContent className="p-4 flex justify-between">
-                  <div>
-                    <div className="font-bold">{d.title}</div>
-                    <div className="text-gray-600">{d.concept}</div>
-                  </div>
+            {DAYS.map((d) => {
+              const completed = isDayCompleted(d);
 
-                  <Button
-                    onClick={() => {
-                      setSelectedDay(d.id);
-                      setScreen("day");
-                    }}
-                  >
-                    Открыть
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
+              return (
+                <Card key={d.id}>
+                  <CardContent className={`p-4 flex justify-between ${completed ? "opacity-60" : ""}`}>
+                    <div>
+                      <div className={`font-bold ${completed ? "line-through" : ""}`}>{d.title}</div>
+                      <div className="text-gray-600">{d.concept}</div>
+                    </div>
+
+                    <Button
+                      onClick={() => {
+                        setSelectedDay(d.id);
+                        setScreen("day");
+                      }}
+                    >
+                      {completed ? "Пройдено →" : "Открыть"}
+                    </Button>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       )}
 
       {screen === "day" && current && (
         <div>
-          <Button onClick={() => setScreen("days")} className="mb-4">
-            ← Назад
-          </Button>
+          <Button onClick={() => setScreen("days")} className="mb-4">← Назад</Button>
 
           <h1 className="text-2xl font-bold mb-2">{current.title}</h1>
           <p className="text-gray-600 mb-4">{current.concept}</p>
@@ -231,14 +237,9 @@ export default function App() {
 
                   return (
                     <Card key={k}>
-                      <CardContent
-                        onClick={() => toggle(k)}
-                        className="p-4 flex gap-3 cursor-pointer"
-                      >
+                      <CardContent onClick={() => toggle(k)} className="p-4 flex gap-3 cursor-pointer">
                         <span>{done[k] ? "✅" : "⬜"}</span>
-                        <span className={done[k] ? "line-through text-gray-400" : ""}>
-                          {c}
-                        </span>
+                        <span className={done[k] ? "line-through text-gray-400" : ""}>{c}</span>
                       </CardContent>
                     </Card>
                   );
