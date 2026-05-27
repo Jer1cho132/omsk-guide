@@ -6,24 +6,109 @@ import { Button } from "@/components/ui/button";
 // REALISTIC DATA LAYER (OMSK)
 // =====================
 
-const TASKS = [
+const DAYS = [
   {
     id: 1,
-    title: "Добраться до ОмГТУ",
-    desc: "Главный корпус — стартовая точка абитуриента",
-    done: false,
+    title: "1 День: Учебный",
+    concept:
+      "Главная задача абитуриента — успешно подать документы и освоиться в ОмГТУ.",
+    checklist: [
+      "Собрать нужные документы",
+      "Добраться до главного корпуса",
+      "Подать документы в приемной комиссии",
+    ],
+    places: [
+      {
+        name: "Главный корпус ОмГТУ",
+        coords: [55.026151, 73.290756],
+        info: "Главный корпус ОмГТУ, проспект Мира 11",
+      },
+      {
+        name: "Приемная комиссия ОмГТУ",
+        coords: [55.02645, 73.2912],
+        info: "Приемная комиссия университета",
+      },
+      {
+        name: "Общежития ОмГТУ",
+        coords: [55.0282, 73.2879],
+        info: "Основные студенческие общежития",
+      },
+    ],
   },
   {
     id: 2,
-    title: "Подать документы в ОмГТУ",
-    desc: "Приёмная комиссия университета",
-    done: false,
+    title: "2 День: Пеш.com",
+    concept:
+      "Изучаем район ОмГТУ пешком и открываем важные места рядом с университетом.",
+    checklist: [
+      "Посмотреть главные корпуса вуза",
+      "Перекус тайм чек: беляшка и Foodпарк",
+      "Посетить Советский парк",
+    ],
+    places: [
+      { name: "Главный корпус", coords: [55.026151, 73.290756], info: "Главный корпус" },
+      { name: "1 корпус", coords: [55.0271, 73.292], info: "Учебный корпус" },
+      { name: "2 корпус", coords: [55.0265, 73.294], info: "Учебный корпус" },
+      { name: "5 и 7 корпуса", coords: [55.0252, 73.2955], info: "Корпуса ОмГТУ" },
+      { name: "6 корпус", coords: [55.0243, 73.2935], info: "Учебный корпус" },
+      { name: "8 корпус", coords: [55.0238, 73.2912], info: "Учебный корпус" },
+      { name: "ТК Терминал", coords: [55.0279, 73.2865], info: "Foodпарк и торговый комплекс" },
+      { name: "Беляшка на остановке", coords: [55.0267, 73.2893], info: "Студенческий перекус" },
+      { name: "Советский парк", coords: [55.031, 73.2715], info: "Главный парк района" },
+    ],
   },
   {
     id: 3,
-    title: "Изучить район университета",
-    desc: "Кафе, транспорт, улицы рядом с ОмГТУ",
-    done: false,
+    title: "3 День: Культурный",
+    concept:
+      "Омск — молодежная культурная столица 2026. Исследуем главные культурные объекты города.",
+    checklist: [
+      "Посетить главную культурную улицу",
+      "Посмотреть памятники города",
+      "Посетить главные культурные объекты",
+    ],
+    places: [
+      { name: "Улица Ленина", coords: [54.982383, 73.376611], info: "Исторический центр" },
+      { name: "Музыкальный театр", coords: [54.9728, 73.3747], info: "Главный театр" },
+      { name: "Любинский проспект", coords: [54.9813, 73.3774], info: "Главное прогулочное пространство" },
+      { name: "Омская крепость", coords: [54.985367, 73.363665], info: "Исторический комплекс" },
+    ],
+  },
+  {
+    id: 4,
+    title: "4 День: Спортивный",
+    concept: "Омск — город с мощной хоккейной и спортивной историей.",
+    checklist: [
+      "Посетить спортивные комплексы",
+      "Увидеть G-Drive Арену",
+      "Изучить хоккейную инфраструктуру города",
+    ],
+    places: [
+      { name: "G-Drive Арена", coords: [54.9897, 73.319], info: "Главная арена" },
+      { name: "Динамо", coords: [54.978, 73.3695], info: "Спорткомплекс" },
+      { name: "Ледовый дворец Шастина", coords: [54.998, 73.342], info: "Ледовый комплекс" },
+      { name: "Сибирский Нефтяник", coords: [55.0312, 73.2863], info: "Спортивный комплекс" },
+      { name: "Академия Авангард", coords: [54.9901, 73.3201], info: "Хоккейная академия" },
+    ],
+  },
+  {
+    id: 5,
+    title: "5 День: Зеленый день",
+    concept:
+      "Исследуем зеленые зоны Омска и студенческий городок ОмГАУ.",
+    checklist: [
+      "Провести день в парках",
+      "Посетить Птичью гавань",
+      "Изучить студгородок ОмГАУ",
+    ],
+    places: [
+      { name: "Птичья гавань", coords: [54.9487, 73.315], info: "Природный парк" },
+      { name: "Парк 30-летия Победы", coords: [54.9562, 73.414], info: "Мемориальный парк" },
+      { name: "Зеленый остров", coords: [54.997, 73.351], info: "Городской парк" },
+      { name: "Парк 30-летия ВЛКСМ", coords: [54.963, 73.438], info: "Парк культуры" },
+      { name: "ОмГАУ", coords: [55.011, 73.3215], info: "Студгородок ОмГАУ" },
+      { name: "Ботанический сад", coords: [55.012, 73.319], info: "Ботанический сад" },
+    ],
   },
 ];
 
@@ -62,7 +147,7 @@ const PLACES = [
 // YANDEX MAP COMPONENT
 // =====================
 
-function YandexMap({ onSelect }) {
+function YandexMap({ onSelect, places }) {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
 
@@ -76,7 +161,7 @@ function YandexMap({ onSelect }) {
           zoom: 12,
         });
 
-        PLACES.forEach((place) => {
+        places.forEach((place) => {
           const placemark = new window.ymaps.Placemark(
             place.coords,
             { balloonContent: place.name },
@@ -163,27 +248,21 @@ const LEISURE = [
 
 export default function App() {
   const [screen, setScreen] = useState("home");
-  const [tasks, setTasks] = useState(TASKS);
+  const [selectedDay, setSelectedDay] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
 
-  const toggleTask = (id) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, done: !t.done } : t))
-    );
-  };
-
-  const progress = calculateProgress(tasks);
+  const currentDay = DAYS.find((d) => d.id === selectedDay);
 
   if (screen === "home") {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-50 p-6 text-center">
         <h1 className="text-3xl font-bold text-blue-700">
-          Омск: гид абитуриента 🏙
+          Омск за 5 дней
         </h1>
         <p className="text-gray-600 mt-2 max-w-md">
-          ОмГТУ, улица Ленина, набережная Иртыша и студенческая жизнь города
+          Интерактивный гид для иногородних абитуриентов ОмГТУ
         </p>
-        <Button onClick={() => setScreen("dashboard")} className="mt-6">
+        <Button onClick={() => setScreen("days")} className="mt-6">
           Начать
         </Button>
       </div>
@@ -224,7 +303,7 @@ export default function App() {
 
       {screen === "map" && (
         <div className="mt-6">
-          <Button onClick={() => setScreen("dashboard")} className="mb-4">
+          <Button onClick={() => setScreen("days")} className="mb-4">
             ← Назад
           </Button>
 
@@ -245,7 +324,7 @@ export default function App() {
 
       {screen === "leisure" && (
         <div>
-          <Button onClick={() => setScreen("dashboard")} className="mb-4">
+          <Button onClick={() => setScreen("days")} className="mb-4">
             ← Назад
           </Button>
 
