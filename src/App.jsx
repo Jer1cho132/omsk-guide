@@ -54,8 +54,11 @@ const DAYS = [
 function DayView({ day, onBack }) {
   const [done, setDone] = useState({});
 
-  const toggle = (i) => {
-    setDone((p) => ({ ...p, [i]: !p[i] }));
+  const toggle = (item) => {
+    setDone((prev) => ({
+      ...prev,
+      [item]: !prev[item],
+    }));
   };
 
   return (
@@ -70,11 +73,24 @@ function DayView({ day, onBack }) {
       <h2 className="font-bold mb-2">Чеклист</h2>
 
       <div className="space-y-2">
-        {day.checklist.map((item, i) => (
-          <Card key={i} onClick={() => toggle(i)} className="cursor-pointer">
+        {day.checklist.map((item) => (
+          <Card
+            key={item}
+            onClick={() => toggle(item)}
+            className="cursor-pointer hover:bg-gray-50 transition"
+          >
             <CardContent className="p-3 flex gap-2 items-center">
-              <span>{done[i] ? "✅" : "⬜"}</span>
-              <span className={done[i] ? "line-through text-gray-400" : ""}>
+              <span className="text-lg">
+                {done[item] ? "✅" : "⬜"}
+              </span>
+
+              <span
+                className={
+                  done[item]
+                    ? "line-through text-gray-400"
+                    : ""
+                }
+              >
                 {item}
               </span>
             </CardContent>
