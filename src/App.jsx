@@ -250,8 +250,18 @@ export default function App() {
   const [screen, setScreen] = useState("home");
   const [selectedDay, setSelectedDay] = useState(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [completedTasks, setCompletedTasks] = useState({});
 
   const currentDay = DAYS.find((d) => d.id === selectedDay);
+
+  const toggleChecklistItem = (dayId, itemIndex) => {
+    const key = `${dayId}-${itemIndex}`;
+
+    setCompletedTasks((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
 
   if (screen === "home") {
     return (
@@ -295,8 +305,9 @@ export default function App() {
                     Открыть
                   </Button>
                 </CardContent>
-              </Card>
-            ))}
+                  </Card>
+                  );
+                })}}
           </div>
         </div>
       )}
@@ -320,11 +331,24 @@ export default function App() {
               <h2 className="text-xl font-bold mb-4">Чеклист</h2>
 
               <div className="space-y-4">
-                {currentDay.checklist.map((item, index) => (
+                {currentDay.checklist.map((item, index) => {
+                  const key = `${currentDay.id}-${index}`;
+                  const completed = completedTasks[key];
+
+                  return (
                   <Card key={index}>
-                    <CardContent className="p-4 flex items-center gap-3">
-                      <span className="text-xl">⬜</span>
-                      <span>{item}</span>
+                    <CardContent
+                      onClick={() => toggleChecklistItem(currentDay.id, index)}
+                      className="p-4 flex items-center gap-3 cursor-pointer hover:bg-gray-50 transition"
+                    >
+                      <span className="text-xl">
+                        {completed ? "✅" : "⬜"}
+                      </span>
+                      <span
+                        className={completed ? "line-through text-gray-400" : ""}
+                      >
+                        {item}
+                      </span>
                     </CardContent>
                   </Card>
                 ))}
